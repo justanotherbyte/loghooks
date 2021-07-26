@@ -41,6 +41,7 @@ import logging
 import aiohttp
 
 from loghooks import WebhookHandler
+from logging import LogRecord
 
 client = discord.Client() # use commands.Bot if you wish. It doesn't make a difference.
 handler = WebhookHandler(
@@ -54,7 +55,7 @@ async def on_ready():
     print("ready")
 
 
-async def my_custom_webhook_function(log: str):
+async def my_custom_webhook_function(log: LogRecord):
     ... # handle your log here
 
 # actual logging stuff

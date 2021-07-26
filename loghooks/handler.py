@@ -25,12 +25,11 @@ class WebhookHandler(logging.Handler):
             warnings.warn("No Logging Level has been set. Please set one using handler.setLevel")
             self._warned_no_level_set = True
 
-        formatted_string = self.formatter.format(record)
-        asyncio.create_task(self.handle_webhook_func(formatted_string))
-        return formatted_string
+        asyncio.create_task(self.handle_webhook_func(record))
+        return record
 
-    async def _default_handle(self, text: str):
-        text = "```json\n{}\n```".format(text)
+    async def _default_handle(self, record: LogRecord):
+        text = "```json\n{}\n```".format(self.formatter.format(record))
         if self.is_locked is True:
             return
         if self.level == logging.DEBUG and self.force_debug is False:
@@ -48,11 +47,3 @@ class WebhookHandler(logging.Handler):
             raise ValueError("Custom Handle must be a coroutine")
 
         self.handle_webhook_func = func
-
-
-
-
-    
-    
-
-

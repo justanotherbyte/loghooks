@@ -19,5 +19,3 @@ def create_webhook(webhook_url: str, session: aiohttp.ClientSession) -> discord.
     elif discord.__version__.startswith("2"):
         webhook = discord.Webhook.from_url(webhook_url, session = adapter_or_session)
         return webhook
-
-
